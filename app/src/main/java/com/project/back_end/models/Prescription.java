@@ -1,56 +1,94 @@
 package com.project.back_end.models;
 
-public class Prescription {
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
-  // @Document annotation:
-//    - Marks the class as a MongoDB document (a collection in MongoDB).
-//    - The collection name is specified as "prescriptions" to map this class to the "prescriptions" collection in MongoDB.
+@Entity
+public class Patient {
 
-// 1. 'id' field:
-//    - Type: private String
-//    - Description:
-//      - Represents the unique identifier for each prescription.
-//      - The @Id annotation marks it as the primary key in the MongoDB collection.
-//      - The id is of type String, which is commonly used for MongoDB's ObjectId as it stores IDs as strings in the database.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-// 2. 'patientName' field:
-//    - Type: private String
-//    - Description:
-//      - Represents the name of the patient receiving the prescription.
-//      - The @NotNull annotation ensures that the patient name is required.
-//      - The @Size(min = 3, max = 100) annotation ensures that the name length is between 3 and 100 characters, ensuring a reasonable name length.
+    @NotNull(message = "Patient name is required")
+    @Size(min = 3, max = 100, message = "Patient name must be between 3 and 100 characters")
+    private String name;
 
-// 3. 'appointmentId' field:
-//    - Type: private Long
-//    - Description:
-//      - Represents the ID of the associated appointment where the prescription was given.
-//      - The @NotNull annotation ensures that the appointment ID is required for the prescription.
+    @NotNull(message = "Email is required")
+    @Email(message = "Email should be valid")
+    private String email;
 
-// 4. 'medication' field:
-//    - Type: private String
-//    - Description:
-//      - Represents the medication prescribed to the patient.
-//      - The @NotNull annotation ensures that the medication name is required.
-//      - The @Size(min = 3, max = 100) annotation ensures that the medication name is between 3 and 100 characters, which ensures meaningful medication names.
+    @NotNull(message = "Password is required")
+    @Size(min = 6, message = "Password must be at least 6 characters")
+    private String password;
 
-// 5. 'dosage' field:
-//    - Type: private String
-//    - Description:
-//      - Represents the dosage information for the prescribed medication.
-//      - The @NotNull annotation ensures that the dosage information is provided.
+    @NotNull(message = "Phone number is required")
+    @Pattern(regexp = "\\d{10}", message = "Phone number must be 10 digits")
+    private String phone;
 
-// 6. 'doctorNotes' field:
-//    - Type: private String
-//    - Description:
-//      - Represents any additional notes or instructions from the doctor regarding the prescription.
-//      - The @Size(max = 200) annotation ensures that the doctor's notes do not exceed 200 characters, providing a reasonable limit for additional notes.
+    @NotNull(message = "Address is required")
+    @Size(max = 255, message = "Address must not exceed 255 characters")
+    private String address;
 
-// 7. Constructors:
-//    - The class includes a no-argument constructor (default constructor) and a parameterized constructor that initializes the fields: patientName, medication, dosage, doctorNotes, and appointmentId.
+    // Default constructor (required by JPA)
+    public Patient() {
+    }
 
-// 8. Getters and Setters:
-//    - Standard getter and setter methods are provided for all fields: id, patientName, medication, dosage, doctorNotes, and appointmentId.
-//    - These methods allow access and modification of the fields of the Prescription class.
+    // --------------------
+    // Getters and Setters
+    // --------------------
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }
